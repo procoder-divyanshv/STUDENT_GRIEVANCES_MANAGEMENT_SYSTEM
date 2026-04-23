@@ -2,13 +2,18 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 require("dotenv").config();
 const PORT = process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
 
- 
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
@@ -40,6 +45,7 @@ const grievanceSchema = new mongoose.Schema({
 const Student = mongoose.model("Student", studentSchema);
 const Grievance = mongoose.model("Grievance", grievanceSchema);
  
+
 const auth = (req, res, next) => {
   const token = req.headers.authorization;
 
