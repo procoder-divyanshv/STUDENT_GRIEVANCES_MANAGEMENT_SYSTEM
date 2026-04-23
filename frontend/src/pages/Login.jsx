@@ -17,31 +17,36 @@ export default function Login() {
   };
 
   return (
-    <div>
+    <div className="page-center">
+    <div className="glass-card">
+
       <h2>Login</h2>
 
       <input
-        placeholder="email"
+        placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
       />
 
       <input
-        placeholder="password"
+        placeholder="Password"
         type="password"
         onChange={(e) => setPassword(e.target.value)}
       />
 
       <button onClick={handleLogin}>Login</button>
 
-      <p>
+      <p style={{ marginTop: "10px" }}>
         Don’t have an account?{" "}
         <span
-          style={{ color: "blue", cursor: "pointer" }}
+          style={{ color: "#60a5fa", cursor: "pointer" }}
           onClick={() => navigate("/register")}
         >
-          Register here
+          Register
         </span>
       </p>
+
     </div>
+  </div>
+
   );
 }

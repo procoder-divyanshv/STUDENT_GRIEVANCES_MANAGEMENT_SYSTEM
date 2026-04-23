@@ -89,14 +89,14 @@ app.post("/api/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // validate input
+         
         if (!email || !password) {
             return res.status(400).json({
                 message: "Email and password are required"
             });
         }
 
-        // check user
+         
         const user = await Student.findOne({ email });
         if (!user) {
             return res.status(400).json({
@@ -104,7 +104,7 @@ app.post("/api/login", async (req, res) => {
             });
         }
 
-        // check password
+         
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
             return res.status(400).json({
@@ -112,17 +112,17 @@ app.post("/api/login", async (req, res) => {
             });
         }
 
-        // generate token (IMPORTANT FIX: add expiry)
+         
         const token = jwt.sign(
             {
                 id: user._id,
                 name: user.name
             },
             process.env.JWT_SECRET,
-            { expiresIn: "1d" }   // 🔥 ADD THIS (IMPORTANT)
+            { expiresIn: "1d" }  
         );
 
-        // clean response
+         
         res.json({
             token,
             name: user.name

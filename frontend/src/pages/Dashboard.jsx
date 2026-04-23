@@ -60,27 +60,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Student Grievance Dashboard</h2>
-      <h2>Welcome, {userName}</h2>
+  <div className="container">
 
-      {/* LOGOUT */}
-      <button onClick={logout}>Logout</button>
+    {/* NAVBAR */}
+    <div className="navbar">
+      <h2>🎓 Grievance Dashboard</h2>
+      <button className="logout" onClick={logout}>
+        Logout
+      </button>
+    </div>
 
-      <hr />
+    <h3>Welcome, {userName}</h3>
 
-      {/* SEARCH */}
-      <div>
-        <input
-          placeholder="Search grievance"
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button onClick={handleSearch}>Search</button>
-      </div>
-
-      <hr />
-
-      {/* SUBMIT FORM */}
+    {/* FORM CARD */}
+    <div className="card">
       <h3>Submit Grievance</h3>
 
       <input
@@ -112,49 +105,43 @@ export default function Dashboard() {
       </select>
 
       <button onClick={submitGrievance}>Submit</button>
-
-      <hr />
-
-      {/* LIST */}
-      <h3>All Grievances</h3>
-
-      {grievances.map((g) => (
-        <div
-          key={g._id}
-          style={{
-            border: "1px solid black",
-            padding: "10px",
-            marginBottom: "10px",
-          }}
-        >
-          <h4>{g.title}</h4>
-          <p>{g.description}</p>
-
-          <p>
-            <b>Category:</b> {g.category}
-          </p>
-
-          <p>
-            <b>Status:</b>{" "}
-            <span
-              style={{
-                color:
-                  g.status === "Resolved" ? "green" : "red",
-              }}
-            >
-              {g.status}
-            </span>
-          </p>
-
-          <button onClick={() => deleteGrievance(g._id)}>
-            Delete
-          </button>
-
-          <button onClick={() => markResolved(g._id)}>
-            Mark Resolved
-          </button>
-        </div>
-      ))}
     </div>
-  );
+
+    {/* SEARCH CARD */}
+    <div className="card">
+      <input
+        placeholder="Search grievance"
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+
+    {/* GRIEVANCE LIST */}
+    {grievances.map((g) => (
+      <div className="card" key={g._id}>
+
+        <h4>{g.title}</h4>
+        <p>{g.description}</p>
+
+        <p>
+          Category: <b>{g.category}</b>
+        </p>
+
+        <p className={g.status === "Resolved" ? "success" : "pending"}>
+          Status: {g.status}
+        </p>
+
+        <button onClick={() => markResolved(g._id)}>
+          Mark Resolved
+        </button>
+
+        <button onClick={() => deleteGrievance(g._id)}>
+          Delete
+        </button>
+
+      </div>
+    ))}
+
+  </div>
+);
 }
